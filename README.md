@@ -19,19 +19,19 @@ If you need more than one connection to your database, please configure your con
 
 ## Expected values / services
 
-This *service provider* expect the following configuration / services to be available:
+This *service provider* expects the following configuration / services to be available:
 
 | Name            | Compulsory | Description                            |
 |-----------------|------------|----------------------------------------|
-| dbal.host       | *no*       | The database host. Defaults to *localhost*  |
-| dbal.user       | *no*       | The database user. Defaults to *root*  |
-| dbal.password   | *no*       | The database password. Defaults to *empty*  |
-| dbal.port       | *no*       | The database port. Defaults to *3306*  |
-| dbal.dbname     | **yes**    | The database name.  |
-| dbal.charset    | *no*    | The database character set.  |
-| dbal.driverOptions    | *no*    | An array of driver options. Defaults to `[1002 =>"SET NAMES utf8"]`  |
-| dbal.params       | *no*       | An array of parameters directly passed to the `Connection` object. If this parameter is set, all parameters above are ignored.  |
-| Doctrine\DBAL\Driver       | *no*       | The DBAL driver to use to create the connection. Defaults to DBAL's PDO_MySQL Driver service  |
+| `dbal.host`       | *no*       | The database host. Defaults to *localhost*  |
+| `dbal.user`       | *no*       | The database user. Defaults to *root*  |
+| `dbal.password`   | *no*       | The database password. Defaults to *empty*  |
+| `dbal.port`       | *no*       | The database port. Defaults to *3306*  |
+| `dbal.dbname`     | **yes**    | The database name.  |
+| `dbal.charset`    | *no*    | The database character set.  |
+| `dbal.driverOptions`    | *no*    | An array of driver options. Defaults to `[1002 =>"SET NAMES utf8"]`  |
+| `dbal.params`       | *no*       | An array of parameters directly passed to the `Connection` object. If this parameter is set, all parameters above are ignored.  |
+| `Doctrine\DBAL\Driver`       | *no*       | The DBAL driver to use to create the connection. Defaults to DBAL's PDO_MySQL Driver service  |
 
 
 ## Provided services
