@@ -10,7 +10,8 @@
   },
   "require": {
     "php": ">=7.0",
-    "container-interop/service-provider": "~0.2.0",
+    "container-interop/service-provider": "~0.3.0",
+    "thecodingmachine/common-factories": "dev-master",
     "doctrine/dbal": "~2.0"
   },
   "require-dev": {

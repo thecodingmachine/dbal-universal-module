@@ -1,6 +1,6 @@
 {
     "version": "1.0",
-    "name": "xhuberty/dbal-universal-module",
+    "name": "thecodingmachine/dbal-universal-module",
     "bindings": {
         "78f58aa7-6982-4bb6-944c-71f86003902d": {
             "_class": "Puli\\Discovery\\Binding\\ClassBinding",
@@ -60,6 +60,11 @@
         },
         "padraic/phar-updater": {
             "install-path": "vendor/padraic/phar-updater",
+            "installer": "composer",
+            "env": "dev"
+        },
+        "paragonie/random_compat": {
+            "install-path": "vendor/paragonie/random_compat",
             "installer": "composer",
             "env": "dev"
         },
@@ -132,6 +137,10 @@
             "install-path": "vendor/symfony/process",
             "installer": "composer",
             "env": "dev"
+        },
+        "thecodingmachine/common-factories": {
+            "install-path": "vendor/thecodingmachine/common-factories",
+            "installer": "composer"
         },
         "webmozart/assert": {
             "install-path": "vendor/webmozart/assert",

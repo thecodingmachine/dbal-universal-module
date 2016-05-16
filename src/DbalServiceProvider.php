@@ -6,26 +6,27 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Driver;
 use Interop\Container\ContainerInterface;
+use Interop\Container\Factories\Parameter;
 use Interop\Container\ServiceProvider;
 
 class DbalServiceProvider implements ServiceProvider
 {
-    public static function getServices()
+    public function getServices()
     {
         return [
-            Connection::class => 'createConnection',
-            'dbal.host' => 'getHost',
-            'dbal.user' => 'getUser',
-            'dbal.password' => 'getPassword',
-            'dbal.port' => 'getPort',
-            'dbal.dbname' => 'getDbname',
-            'dbal.charset' => 'getCharset',
-            'dbal.driverOptions' => 'getDriverOptions',
-            Driver::class => 'getDriver',
+            Connection::class => [self::class,'createConnection'],
+            Driver::class => [self::class,'getDriver'],
+            // Default parameters should be overloaded by the container
+            'dbal.host' => new Parameter('localhost'),
+            'dbal.user' => new Parameter('root'),
+            'dbal.password' => new Parameter(''),
+            'dbal.port' => new Parameter('3306'),
+            'dbal.dbname' => [self::class, 'getDbname'],
+            'dbal.charset' => new Parameter('utf8'),
+            'dbal.driverOptions' => new Parameter([1002 => 'SET NAMES utf8']),
         ];
     }
-
-    public static function createConnection(ContainerInterface $container, callable $previous = null) : Connection
+    public static function createConnection(ContainerInterface $container) : Connection
     {
         if ($container->has('dbal.params')) {
             $params = $container->get('dbal.params');
@@ -48,74 +49,13 @@ class DbalServiceProvider implements ServiceProvider
         return $connection;
     }
 
-    public static function getHost(ContainerInterface $container, callable $previous = null) :string
+    public static function getDbname():string
     {
-        if ($previous !== null) {
-            return $previous();
-        }
-
-        return 'localhost';
-    }
-
-    public static function getUser(ContainerInterface $container, callable $previous = null):string
-    {
-        if ($previous !== null) {
-            return $previous();
-        }
-
-        return 'root';
-    }
-
-    public static function getPassword(ContainerInterface $container, callable $previous = null):string
-    {
-        if ($previous !== null) {
-            return $previous();
-        }
-
-        return '';
-    }
-
-    public static function getPort(ContainerInterface $container, callable $previous = null):int
-    {
-        if ($previous !== null) {
-            return $previous();
-        }
-
-        return 3306;
-    }
-
-    public static function getDbname(ContainerInterface $container, callable $previous = null):string
-    {
-        if ($previous !== null) {
-            return $previous();
-        }
         throw new DBALException('The "dbname" must be set in the container entry "dbal.dbname"');
     }
 
-    public static function getCharset(ContainerInterface $container, callable $previous = null):string
+    public static function getDriver():Driver
     {
-        if ($previous !== null) {
-            return $previous();
-        }
-
-        return 'utf8';
-    }
-
-    public static function getDriverOptions(ContainerInterface $container, callable $previous = null):array
-    {
-        if ($previous !== null) {
-            return $previous();
-        }
-
-        return array(1002 => 'SET NAMES utf8');
-    }
-
-    public static function getDriver(ContainerInterface $container, callable $previous = null):Driver
-    {
-        if ($previous !== null) {
-            return $previous();
-        }
-
         return new Driver\PDOMySql\Driver();
     }
 }
