@@ -1,9 +1,6 @@
 <?php
 namespace TheCodingMachine;
 
-
-use Assembly\ArrayDefinitionProvider;
-use Assembly\ParameterDefinition;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Driver;
@@ -30,23 +27,23 @@ class DbalServiceProvider implements ServiceProvider
     }
     public static function createConnection(ContainerInterface $container) : Connection
     {
-        if($container->has(Connection::class.'.params')) {
+        if ($container->has('dbal.params')) {
             $params = $container->get('dbal.params');
         } else {
             $params = array(
                 'host' => $container->get('dbal.host'),
-                'user' =>$container->get('dbal.user'),
+                'user' => $container->get('dbal.user'),
                 'password' => $container->get('dbal.password'),
                 'port' => $container->get('dbal.port'),
                 'dbname' => $container->get('dbal.dbname'),
                 'charset' => $container->get('dbal.charset'),
-                'driverOptions' => $container->get('dbal.driverOptions')
+                'driverOptions' => $container->get('dbal.driverOptions'),
             );
         }
 
         $driver = $container->get(Driver::class);
 
-        $connection =  new Connection($params, $driver);
+        $connection = new Connection($params, $driver);
 
         return $connection;
     }
@@ -55,7 +52,6 @@ class DbalServiceProvider implements ServiceProvider
     {
         throw new DBALException('The "dbname" must be set in the container entry "dbal.dbname"');
     }
-
 
     public static function getDriver():Driver
     {
