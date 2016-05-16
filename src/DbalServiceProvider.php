@@ -1,4 +1,5 @@
 <?php
+
 namespace TheCodingMachine;
 
 use Doctrine\DBAL\Connection;
@@ -13,16 +14,16 @@ class DbalServiceProvider implements ServiceProvider
     public function getServices()
     {
         return [
-            Connection::class => [DbalServiceProvider::class,'createConnection'],
-            Driver::class => [DbalServiceProvider::class,'getDriver'],
+            Connection::class => [self::class,'createConnection'],
+            Driver::class => [self::class,'getDriver'],
             // Default parameters should be overloaded by the container
-            'dbal.host'=> new Parameter('localhost'),
-            'dbal.user'=> new Parameter('root'),
-            'dbal.password'=> new Parameter(''),
-            'dbal.port'=> new Parameter('3306'),
-            'dbal.dbname'=> [DbalServiceProvider::class, 'getDbname'],
-            'dbal.charset'=> new Parameter('utf8'),
-            'dbal.driverOptions'=> new Parameter([1002 => "SET NAMES utf8"])
+            'dbal.host' => new Parameter('localhost'),
+            'dbal.user' => new Parameter('root'),
+            'dbal.password' => new Parameter(''),
+            'dbal.port' => new Parameter('3306'),
+            'dbal.dbname' => [self::class, 'getDbname'],
+            'dbal.charset' => new Parameter('utf8'),
+            'dbal.driverOptions' => new Parameter([1002 => 'SET NAMES utf8']),
         ];
     }
     public static function createConnection(ContainerInterface $container) : Connection
