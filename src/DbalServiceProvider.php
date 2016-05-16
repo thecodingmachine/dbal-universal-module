@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Xavier
- * Date: 04/03/2016
- * Time: 16:46
- */
-
 namespace TheCodingMachine;
 
 
@@ -15,26 +8,27 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Driver;
 use Interop\Container\ContainerInterface;
+use Interop\Container\Factories\Parameter;
 use Interop\Container\ServiceProvider;
 
 class DbalServiceProvider implements ServiceProvider
 {
-    public static function getServices()
+    public function getServices()
     {
         return [
             Connection::class => [DbalServiceProvider::class,'createConnection'],
             Driver::class => [DbalServiceProvider::class,'getDriver'],
             // Default parameters should be overloaded by the container
-            'dbal.host'=> new ParameterDefinition('localhost'),
-            'dbal.user'=> new ParameterDefinition('root'),
-            'dbal.password'=> new ParameterDefinition(''),
-            'dbal.port'=> new ParameterDefinition('3306'),
+            'dbal.host'=> new Parameter('localhost'),
+            'dbal.user'=> new Parameter('root'),
+            'dbal.password'=> new Parameter(''),
+            'dbal.port'=> new Parameter('3306'),
             'dbal.dbname'=> [DbalServiceProvider::class, 'getDbname'],
-            'dbal.charset'=> new ParameterDefinition('utf8'),
-            'dbal.driverOptions'=> new ArrayDefinitionProvider([1002 => new ParameterDefinition("SET NAMES utf8")])
+            'dbal.charset'=> new Parameter('utf8'),
+            'dbal.driverOptions'=> new Parameter([1002 => "SET NAMES utf8"])
         ];
     }
-    public static function createConnection(ContainerInterface $container, callable $previous = null) : Connection
+    public static function createConnection(ContainerInterface $container) : Connection
     {
         if($container->has(Connection::class.'.params')) {
             $params = $container->get('dbal.params');

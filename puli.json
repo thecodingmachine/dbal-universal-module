@@ -16,10 +16,6 @@
             "install-path": "vendor/container-interop/container-interop",
             "installer": "composer"
         },
-        "container-interop/definition-interop": {
-            "install-path": "vendor/container-interop/definition-interop",
-            "installer": "composer"
-        },
         "container-interop/service-provider": {
             "install-path": "vendor/container-interop/service-provider",
             "installer": "composer"
@@ -56,10 +52,6 @@
             "install-path": "vendor/justinrainbow/json-schema",
             "installer": "composer",
             "env": "dev"
-        },
-        "mnapoli/assembly": {
-            "install-path": "vendor/mnapoli/assembly",
-            "installer": "composer"
         },
         "padraic/humbug_get_contents": {
             "install-path": "vendor/padraic/humbug_get_contents",
@@ -145,6 +137,10 @@
             "install-path": "vendor/symfony/process",
             "installer": "composer",
             "env": "dev"
+        },
+        "thecodingmachine/common-factories": {
+            "install-path": "vendor/thecodingmachine/common-factories",
+            "installer": "composer"
         },
         "webmozart/assert": {
             "install-path": "vendor/webmozart/assert",

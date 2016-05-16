@@ -10,20 +10,14 @@
   },
   "require": {
     "php": ">=7.0",
-    "container-interop/service-provider": "~0.2.0",
-    "mnapoli/assembly" : "dev-callable-service-providers",
+    "container-interop/service-provider": "~0.3.0",
+    "thecodingmachine/common-factories": "dev-master",
     "doctrine/dbal": "~2.0"
   },
   "require-dev": {
     "puli/cli":"^1.0",
     "puli/composer-plugin": "^1.0"
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url":  "git@github.com:xhuberty/assembly.git"
-    }
-  ],
   "minimum-stability": "dev",
   "prefer-stable": true
 }
