@@ -11,8 +11,14 @@
   "require": {
     "php": ">=7.1",
     "thecodingmachine/funky": "^1",
-    "doctrine/dbal": "~2.0"
+    "doctrine/dbal": "~2.0",
+    "thecodingmachine/symfony-console-universal-module": "^0.4"
   },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.4.x-dev"
+    }
+  }
 }

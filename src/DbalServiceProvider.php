@@ -5,7 +5,14 @@ namespace TheCodingMachine;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Driver;
+use Doctrine\DBAL\Tools\Console\Command\ImportCommand;
+use Doctrine\DBAL\Tools\Console\Command\ReservedWordsCommand;
+use Doctrine\DBAL\Tools\Console\Command\RunSqlCommand;
+use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 use Interop\Container\ContainerInterface;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Helper\HelperSet;
+use TheCodingMachine\Funky\Annotations\Extension;
 use TheCodingMachine\Funky\Annotations\Factory;
 use TheCodingMachine\Funky\ServiceProvider;
 
@@ -111,5 +118,28 @@ class DbalServiceProvider extends ServiceProvider
     public static function getDriverOptions():array
     {
         return [1002 => 'SET NAMES utf8'];
+    }
+
+    /**
+     * @Extension()
+     */
+    public static function extendConsole(Application $console): Application
+    {
+        $console->addCommands([
+            new RunSqlCommand(),
+            new ImportCommand(),
+            new ReservedWordsCommand(),
+        ]);
+        return $console;
+    }
+
+    /**
+     * Registers the DB in the Symfony console helper set (used by commands)
+     *
+     * @Extension()
+     */
+    public static function extendHelperSet(HelperSet $helperSet, Connection $connection): HelperSet
+    {
+        $helperSet->set(new ConnectionHelper($connection), 'db');
     }
 }
