@@ -1,3 +1,3 @@
 {
-  "Interop\\Container\\ServiceProvider": "TheCodingMachine\\DbalServiceProvider"
+  "Interop\\Container\\ServiceProviderInterface": "TheCodingMachine\\DbalServiceProvider"
 }

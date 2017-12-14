@@ -9,14 +9,9 @@
     }
   },
   "require": {
-    "php": ">=7.0",
-    "container-interop/service-provider": "~0.3.0",
-    "thecodingmachine/common-factories": "^0.3",
+    "php": ">=7.1",
+    "thecodingmachine/funky": "^1",
     "doctrine/dbal": "~2.0"
-  },
-  "require-dev": {
-    "puli/cli":"^1.0",
-    "puli/composer-plugin": "^1.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true

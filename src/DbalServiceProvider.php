@@ -6,26 +6,19 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Driver;
 use Interop\Container\ContainerInterface;
-use Interop\Container\Factories\Parameter;
-use Interop\Container\ServiceProvider;
+use TheCodingMachine\Funky\Annotations\Factory;
+use TheCodingMachine\Funky\ServiceProvider;
 
-class DbalServiceProvider implements ServiceProvider
+class DbalServiceProvider extends ServiceProvider
 {
-    public function getServices()
-    {
-        return [
-            Connection::class => [self::class,'createConnection'],
-            Driver::class => [self::class,'getDriver'],
-            // Default parameters should be overloaded by the container
-            'dbal.host' => new Parameter('localhost'),
-            'dbal.user' => new Parameter('root'),
-            'dbal.password' => new Parameter(''),
-            'dbal.port' => new Parameter('3306'),
-            'dbal.dbname' => [self::class, 'getDbname'],
-            'dbal.charset' => new Parameter('utf8'),
-            'dbal.driverOptions' => new Parameter([1002 => 'SET NAMES utf8']),
-        ];
-    }
+    /**
+     * @Factory()
+     * @param ContainerInterface $container
+     * @return Connection
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     public static function createConnection(ContainerInterface $container) : Connection
     {
         if ($container->has('dbal.params')) {
@@ -44,18 +37,79 @@ class DbalServiceProvider implements ServiceProvider
 
         $driver = $container->get(Driver::class);
 
-        $connection = new Connection($params, $driver);
-
-        return $connection;
+        return new Connection($params, $driver);
     }
 
+    /**
+     * @Factory(name="dbal.dbname")
+     * @return string
+     * @throws DBALException
+     */
     public static function getDbname():string
     {
         throw new DBALException('The "dbname" must be set in the container entry "dbal.dbname"');
     }
 
+    /**
+     * @Factory()
+     * @return Driver
+     */
     public static function getDriver():Driver
     {
         return new Driver\PDOMySql\Driver();
+    }
+
+    /**
+     * @Factory(name="dbal.host")
+     * @return string
+     */
+    public static function getHost():string
+    {
+        return 'localhost';
+    }
+
+    /**
+     * @Factory(name="dbal.user")
+     * @return string
+     */
+    public static function getUser():string
+    {
+        return 'root';
+    }
+
+    /**
+     * @Factory(name="dbal.password")
+     * @return string
+     */
+    public static function getPassword():string
+    {
+        return '';
+    }
+
+    /**
+     * @Factory(name="dbal.port")
+     * @return int
+     */
+    public static function getPort():int
+    {
+        return 3306;
+    }
+
+    /**
+     * @Factory(name="dbal.charset")
+     * @return string
+     */
+    public static function getCharset():string
+    {
+        return 'utf8';
+    }
+
+    /**
+     * @Factory(name="dbal.driverOptions")
+     * @return array
+     */
+    public static function getDriverOptions():array
+    {
+        return [1002 => 'SET NAMES utf8'];
     }
 }
