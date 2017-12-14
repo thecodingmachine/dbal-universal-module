@@ -5,7 +5,7 @@ namespace TheCodingMachine;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Driver;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use TheCodingMachine\Funky\Annotations\Factory;
 use TheCodingMachine\Funky\ServiceProvider;
 
